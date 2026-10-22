@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DPM Quiz · Session 1</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   Digital Project Management — Session 1 Quiz
+   ===================================================================== */
+:root{
+  --bg:#f4f1ea; --card:#ffffff; --ink:#15213a; --ink-2:#4a5570; --line:#e3ddd0;
+  --brand:#1d3461; --brand-2:#2b4c8c; --accent:#e8a33d; --danger:#c8423b; --ok:#2f7d5b;
+  --sel:#eaf0fb; --l1:#2f7d5b; --l2:#2b6cb0; --l3:#b7791f; --l4:#b83280;
+  --radius:16px; --shadow:0 1px 2px rgba(21,33,58,.06),0 12px 32px -12px rgba(21,33,58,.18);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 Manrope,system-ui,sans-serif;min-height:100vh;
+  -webkit-user-select:none;user-select:none}
+input{-webkit-user-select:text;user-select:text}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 48px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em;font-size:13px;text-transform:uppercase;color:var(--brand)}
+.brand .dot{min-width:38px;height:28px;padding:0 6px;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff;font-size:11px}
+.pill{font-size:12px;font-weight:600;padding:5px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:32px;border:1px solid var(--line)}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.2;margin:0 0 10px}
+h1{font-size:clamp(26px,5vw,36px)}
+h2{font-size:clamp(20px,3.6vw,24px)}
+.muted{color:var(--ink-2)}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:22px 0 26px;padding:0;list-style:none}
+.rules li{background:var(--bg);border-radius:12px;padding:12px 14px;font-size:14px}
+.rules b{display:block;font-size:20px;font-family:Fraunces,serif;color:var(--brand)}
+label{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
+input[type=text],input[type=email]{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid var(--line);font:inherit;color:var(--ink);background:#fff}
+input:focus{outline:none;border-color:var(--brand-2);box-shadow:0 0 0 3px rgba(43,76,140,.15)}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:14px;margin-top:18px;cursor:pointer}
+.check input{margin-top:3px;width:18px;height:18px;accent-color:var(--brand)}
+.btn{appearance:none;border:0;border-radius:12px;padding:14px 22px;font:700 15px Manrope,sans-serif;cursor:pointer;
+  background:var(--brand);color:#fff;transition:transform .08s,background .15s,opacity .15s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--brand-2)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.btn.block{width:100%;justify-content:center;margin-top:22px}
+.error{color:var(--danger);font-weight:600;font-size:14px;margin-top:12px;min-height:1em}
+.banner{background:#fff6e5;border:1px solid #f1d39c;color:#7a5410;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px}
+.hidden{display:none!important}
+
+/* quiz */
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
+.progress{flex:1}
+.progress .meta{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.bar{height:8px;border-radius:99px;background:#e9e3d6;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .3s}
+.timer{position:relative;width:68px;height:68px;flex:none}
+.timer svg{transform:rotate(-90deg)}
+.timer .t{position:absolute;inset:0;display:grid;place-items:center;font:700 20px Manrope;font-variant-numeric:tabular-nums}
+.timer .track{stroke:#e9e3d6}
+.timer .run{stroke:var(--accent);transition:stroke-dashoffset .1s linear,stroke .2s}
+.timer.warn .run{stroke:var(--danger)}
+.timer.warn .t{color:var(--danger)}
+.level{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;color:#fff;margin-bottom:12px}
+.level.l1{background:var(--l1)}.level.l2{background:var(--l2)}.level.l3{background:var(--l3)}.level.l4{background:var(--l4)}
+.scenario{font-size:17px;line-height:1.6;margin:0 0 22px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);
+  background:#fff;font:500 15px/1.5 Manrope,sans-serif;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s}
+.opt:hover{border-color:#b8c4dc}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--bg);font-weight:700;font-size:13px}
+.opt.on{border-color:var(--brand);background:var(--sel)}
+.opt.on .k{background:var(--brand);color:#fff}
+.opt[disabled]{cursor:default}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}
+.hint{font-size:12.5px;color:var(--ink-2)}
+.notice{background:#fdecea;border:1px solid #f3c1bd;color:#8a2a24;padding:10px 14px;border-radius:10px;font-size:13.5px;margin-bottom:14px}
+
+/* result */
+.center{text-align:center}
+.score{font-family:Fraunces,serif;font-size:64px;font-weight:700;color:var(--brand);line-height:1;margin:18px 0 6px}
+.icon{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;font-size:30px;color:#fff}
+.icon.ok{background:var(--ok)}.icon.stop{background:var(--danger)}.icon.wait{background:var(--brand)}
+.spinner{width:36px;height:36px;border:4px solid #e3ddd0;border-top-color:var(--brand);border-radius:50%;animation:spin 1s linear infinite;margin:10px auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{text-align:center;font-size:12px;color:var(--ink-2);margin-top:22px}
+
+@media (max-width:560px){
+  .card{padding:22px 18px}
+  .rules{grid-template-columns:1fr 1fr}
+  .timer{width:58px;height:58px}
+  .timer svg{width:58px;height:58px}
+  .scenario{font-size:16px}
+}
+</style>
+</head>
+<body oncontextmenu="return false">
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="dot">DPM</span>Digital Project Management</div>
+    <span class="pill">Session 1 · Quiz</span>
+  </header>
+
+  <!-- ============ INTRO ============ -->
+  <section id="s-intro" class="card hidden">
+    <div id="demoBanner" class="banner hidden">Preview mode: no results backend is connected, so answers are <b>not saved</b> and the one-attempt lock is off. Set <code>SCRIPT_URL</code> in the page to go live.</div>
+    <h1>Session 1 Knowledge Check</h1>
+    <p class="muted">Introduction to Project &amp; Digital Project Management. Each question describes a short real-world scenario. The questions get progressively harder.</p>
+    <ul class="rules">
+      <li><b>20</b>scenario-based questions</li>
+      <li><b>25 s</b>per question, then it moves on automatically</li>
+      <li><b>1</b>attempt only, so there's no retake</li>
+      <li><b>No going back</b>to a previous question</li>
+    </ul>
+    <form id="startForm" autocomplete="on" novalidate>
+      <label for="fName">Full name</label>
+      <input id="fName" type="text" required maxlength="80" placeholder="e.g. Marie Dupont">
+      <label for="fEmail">School email</label>
+      <input id="fEmail" type="email" required maxlength="120" placeholder="firstname.lastname@school.fr">
+      <label for="fId">Student ID</label>
+      <input id="fId" type="text" required maxlength="40" placeholder="e.g. 2024-00123">
+      <label class="check"><input id="fAgree" type="checkbox"> I understand this quiz can be taken only once. Leaving or refreshing the page forfeits the current question.</label>
+      <div class="error" id="startErr"></div>
+      <button class="btn block" id="startBtn" type="submit">Start the quiz →</button>
+    </form>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="s-quiz" class="card hidden">
+    <div id="resumeNote" class="notice hidden">The page was reloaded, so the question you were on has been recorded as unanswered.</div>
+    <div class="qhead">
+      <div class="progress">
+        <div class="meta"><span id="qCount">Question 1 of 20</span><span id="qAnswered"></span></div>
+        <div class="bar"><i id="qBar" style="width:0"></i></div>
+      </div>
+      <div class="timer" id="timer" aria-live="off">
+        <svg width="68" height="68" viewBox="0 0 68 68"><circle class="track" cx="34" cy="34" r="29" fill="none" stroke-width="6"/>
+          <circle class="run" id="ring" cx="34" cy="34" r="29" fill="none" stroke-width="6" stroke-linecap="round"/></svg>
+        <div class="t" id="tNum">25</div>
+      </div>
+    </div>
+    <span class="level" id="qLevel">Level 1</span>
+    <p class="scenario" id="qText"></p>
+    <div class="opts" id="qOpts" role="radiogroup"></div>
+    <div class="qfoot">
+      <span class="hint">Tip: press 1–4 to choose, Enter to confirm.</span>
+      <button class="btn" id="nextBtn" disabled>Confirm &amp; next →</button>
+    </div>
+  </section>
+
+  <!-- ============ STATUS SCREENS ============ -->
+  <section id="s-sending" class="card center hidden">
+    <div class="spinner"></div>
+    <h2>Submitting your answers…</h2>
+    <p class="muted">Please keep this page open.</p>
+  </section>
+
+  <section id="s-retry" class="card center hidden">
+    <div class="icon stop">!</div>
+    <h2>We couldn't reach the server</h2>
+    <p class="muted">Your answers are saved on this device. Check your connection and try again. Don't close this page.</p>
+    <button class="btn" id="retryBtn">Try again</button>
+  </section>
+
+  <section id="s-done" class="card center hidden">
+    <div class="icon ok">✓</div>
+    <h2>Quiz submitted</h2>
+    <div id="scoreWrap" class="hidden"><div class="score" id="scoreNum"></div><p class="muted" id="scoreMsg"></p></div>
+    <p class="muted" id="doneMsg">Your responses have been recorded. Thank you!</p>
+  </section>
+
+  <section id="s-blocked" class="card center hidden">
+    <div class="icon stop">✕</div>
+    <h2>You have already taken this quiz</h2>
+    <p class="muted" id="blockedMsg">This quiz can be taken only once. If you believe this is a mistake, please contact your instructor.</p>
+  </section>
+
+  <footer>Digital Project Management · Session 1</footer>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIGURATION: edit these values
+   ===================================================================== */
+const CONFIG = {
+  // Paste the Google Apps Script Web App URL here (see README.md).
+  SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxti1_zGmnsj9aHbFKr4DZZ1kgRMI-9-cveHsTywV17hbhnkNgKiZ585QUTkZ3xIwbs/exec",
+  QUIZ_ID: "dpm-session1",       // change this if you reuse the page for another quiz
+  SECONDS_PER_QUESTION: 25,
+  SHUFFLE_OPTIONS: true,          // answer options appear in a different order for each student
+  SHOW_SCORE: true                // show the score to the student at the end
+};
+
+/* =====================================================================
+   QUESTIONS (ordered from easiest to hardest)
+   The answer key is NOT here: it lives only in the Apps Script (Code.gs),
+   so students cannot find it in the page source on GitHub.
+   ===================================================================== */
+const LEVELS = {1:"Level 1 · Recall",2:"Level 2 · Apply",3:"Level 3 · Analyze",4:"Level 4 · Evaluate"};
+const QUESTIONS = [
+ {l:1,q:"Your digital agency has two jobs this month: (1) building a one-off promotional microsite for a client's product launch, due in 8 weeks, and (2) answering the same client's routine website support tickets every day. Which statement is correct?",
+  o:["Both are projects, because both are done for a paying client","Only the support tickets are a project, because they are continuous","Only the microsite is a project: it is temporary and creates a unique result","Neither is a project, because neither involves building something physical"]},
+ {l:1,q:"A retailer is running a website redesign, a new mobile app and a loyalty-programme launch. All three serve the same \"Digital-First 2027\" goal, share resources and are managed together in a coordinated way. This group of related projects is best described as a:",
+  o:["Program","Portfolio","Process group","Project Management Office"]},
+ {l:1,q:"Lina has just received the sponsor's approval for a new e-commerce app, and the project has been formally defined. Her next job is to plan the scope, schedule, cost and resources. Which life-cycle phase is she entering?",
+  o:["Starting the project","Organizing & preparing","Carrying out the work","Closing the project"]},
+ {l:1,q:"The new website is live, the client has signed off the final deliverables, and the developers are being released to work on other assignments. Which process group is the project in?",
+  o:["Executing","Monitoring & Controlling","Initiating","Closing"]},
+ {l:1,q:"During each Sprint, a Scrum team meets every morning for a short stand-up to synchronise progress and raise blockers. Which Scrum event is this?",
+  o:["Sprint Planning","Daily Scrum","Sprint Review","Retrospective"]},
+
+ {l:2,q:"Your company's PMO publishes templates and best-practice guides and runs training sessions, but project managers are free to decide whether to use them. What type of PMO is this?",
+  o:["Directive","Controlling","Supportive","Executive"]},
+ {l:2,q:"Midway through a project, the client asks you to deliver the mobile app three weeks earlier with exactly the same features. Based on the competing project constraints, what is the most likely consequence?",
+  o:["Nothing changes, because the scope stays the same","Cost and/or risk are likely to increase","Quality automatically improves because the team is more focused","Scope must be expanded to compensate for the shorter schedule"]},
+ {l:2,q:"A public agency is building a tax back-office system. Requirements are fixed by law, well documented and unlikely to change, and the regulator requires each phase to be fully documented before the next one starts. Which life cycle fits best?",
+  o:["Predictive (waterfall)","Adaptive (agile)","Iterative, refining the product cycle after cycle","No formal life cycle, so the team can stay flexible"]},
+ {l:2,q:"Karim leads a CRM migration project but, in his company's structure, he reports to the Head of Marketing. A colleague says: \"So Karim is really a functional manager, not a project manager.\" What is the best response?",
+  o:["Correct: anyone who reports to a functional manager becomes one","Incorrect: reporting lines vary with the organizational structure, and the PM role remains distinct","Correct: a project manager can only ever report to the PMO","Incorrect: Karim is actually an operations manager"]},
+ {l:2,q:"Halfway through a project, a talented developer becomes demotivated after a difficult personal period. The project manager arranges mentoring and temporarily flexible hours for him. Which area of the PM's responsibilities does this mainly address?",
+  o:["Task needs","Team needs","Individual needs","Stakeholder needs"]},
+
+ {l:3,q:"A food-delivery start-up re-ranks its feature backlog every week using dashboards of user activation, retention and drop-off rates. Which characteristic of digital project management does this best illustrate?",
+  o:["Data-informed decisions","Technology-enabled collaboration","Predictive scope control","Heavy stage-gate governance"]},
+ {l:3,q:"To hit aggressive release dates, a fintech team skipped code refactoring for three releases in a row. Now every new feature takes almost twice as long to build and old bugs keep reappearing. Which digital execution challenge is this?",
+  o:["Shifting requirements","Talent & capacity","Scaling across teams","Technical debt"]},
+ {l:3,q:"In a bank's digital team, every small UI change waits for a monthly steering-committee approval, and security and compliance checks happen only at the very end. Releases are constantly delayed. Following digital-governance principles, what should change?",
+  o:["Remove all governance and compliance checks so the team can release freely","Keep the monthly committee but require more detailed documentation per change","Use short review cycles, push decisions to the team, and build compliance into the workflow","Move to a Directive PMO that approves every change centrally before release"]},
+ {l:3,q:"Three weeks after launching a meal-planning app, analytics show that 40% of new users abandon the sign-up screen. Using the digital project phases (Discover → Define → Design → Develop → Deploy → Iterate), how should the team treat this finding?",
+  o:["As proof the project failed and must now be closed","As input for the Iterate phase, cycling back to improve the product","As out of scope, since Deploy is the final phase of the project","As a reason to restart the whole project with a waterfall plan"]},
+ {l:3,q:"A start-up is building a social-shopping app. Requirements are expected to change often, real users can test a new version every week, and being first to market matters more than upfront certainty. Which execution approach fits best?",
+  o:["Predictive / waterfall with a detailed, fixed plan","Iterative model with feedback only after each long cycle","A Directive PMO with formal stage-gates for each feature","Agile, delivering working increments in short cycles"]},
+
+ {l:4,q:"At the end of Sprint 3, the team demonstrates the new checkout feature to stakeholders and gathers their feedback (Meeting X). Later that day, the team meets on its own to discuss how to improve the way it works together (Meeting Y). What are X and Y?",
+  o:["X = Sprint Planning, Y = Daily Scrum","X = Sprint Review, Y = Retrospective","X = Retrospective, Y = Sprint Review","X = Daily Scrum, Y = Sprint Planning"]},
+ {l:4,q:"A PMO currently requires every project to follow its Scrum framework and audits compliance, but leaves day-to-day management to the project managers. After several failures, the CEO wants the PMO itself to run the three most strategic projects. This is a shift from:",
+  o:["Supportive to Controlling","Controlling to Directive","Directive to Supportive","Supportive to Directive"]},
+ {l:4,q:"Mid-project, the sponsor adds five new features (about 30% more scope) but insists the budget, deadline and team size stay the same. What is the project manager's BEST action?",
+  o:["Accept the change and ask the team to absorb it through overtime","Reject the change, because the original scope was already approved","Accept the change and quietly shorten testing to save time","Present trade-off options and let stakeholder priorities decide which constraint flexes"]},
+ {l:4,q:"A bank is launching a new payment system. The core transaction engine must meet strict, stable regulatory requirements, while the customer-facing mobile wallet depends on user preferences nobody can predict yet. Which life-cycle strategy is MOST appropriate?",
+  o:["Predictive for the entire system, to satisfy the regulator","Agile for the entire system, to maximise speed","Predictive for the regulated core, adaptive (agile) for the mobile wallet","Iterative for the entire system, with a single release at the very end"]},
+ {l:4,q:"An insurance group runs 40 digital projects with inconsistent methods; executives cannot see real status and many projects run late. Yet delivery teams warn that heavy approval processes would kill their speed. Which solution BEST balances both concerns?",
+  o:["A Directive PMO that takes over all 40 projects and adds formal stage-gates","A Supportive PMO offering optional templates, leaving each team to choose","A Controlling PMO with a common lightweight framework, metric-driven reviews and built-in guardrails","No PMO: teams self-organise and report status only at project closure"]}
+];
+
+/* =====================================================================
+   ENGINE: no need to edit below this line
+   ===================================================================== */
+const N = QUESTIONS.length, LETTERS = ["A","B","C","D"];
+const DEMO = !/^https:\/\/script\.google(usercontent)?\.com\//.test(CONFIG.SCRIPT_URL);
+const KEY = "quiz:" + CONFIG.QUIZ_ID;
+const $ = id => document.getElementById(id);
+
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem(KEY)) }catch(e){ return null } },
+  set(v){ if(DEMO) return; try{ localStorage.setItem(KEY, JSON.stringify(v)) }catch(e){} }
+};
+
+let S = null;          // quiz state
+let tick = null, deadline = 0, selected = null;
+
+function show(id){
+  ["s-intro","s-quiz","s-sending","s-retry","s-done","s-blocked"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+  window.scrollTo(0,0);
+}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a; }
+
+async function api(payload){
+  const res = await fetch(CONFIG.SCRIPT_URL, { method:"POST", body: JSON.stringify(payload) }); // text/plain → no CORS preflight
+  if(!res.ok) throw new Error("HTTP " + res.status);
+  return res.json();
+}
+
+/* ---------- start ---------- */
+$("startForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("fName").value.trim(), email = $("fEmail").value.trim().toLowerCase(), sid = $("fId").value.trim();
+  const err = $("startErr"); err.textContent = "";
+  if(!name || !email || !sid) return err.textContent = "Please fill in all three fields.";
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return err.textContent = "Please enter a valid email address.";
+  if(!$("fAgree").checked) return err.textContent = "Please confirm you understand the one-attempt rule.";
+  if(!DEMO && store.get()) return blocked();
+
+  const btn = $("startBtn"); btn.disabled = true; btn.textContent = "Checking…";
+  let token = "demo";
+  if(!DEMO){
+    try{
+      const r = await api({action:"start", quizId:CONFIG.QUIZ_ID, name, email, studentId:sid});
+      if(!r.ok){
+        btn.disabled = false; btn.textContent = "Start the quiz →";
+        if(r.error === "already_taken"){ store.set({status:"done"}); return blocked(); }
+        return err.textContent = ({missing_fields:"Please fill in all fields.", invalid_email:"Please enter a valid email address.",
+          wrong_domain:"Please use your school email address.", closed:"This quiz is closed."})[r.error] || "Could not start the quiz. Please try again.";
+      }
+      token = r.token;
+    }catch(ex){
+      btn.disabled = false; btn.textContent = "Start the quiz →";
+      return err.textContent = "Could not reach the server. Check your connection and try again.";
+    }
+  }
+  S = { status:"in_progress", token, name, idx:0, answers:Array(N).fill(null), tabSwitches:0,
+        order: QUESTIONS.map(q => CONFIG.SHUFFLE_OPTIONS ? shuffle(q.o.map((_,i)=>i)) : q.o.map((_,i)=>i)) };
+  store.set(S);
+  show("s-quiz"); render();
+});
+
+/* ---------- question rendering ---------- */
+function render(){
+  const q = QUESTIONS[S.idx];
+  selected = null;
+  $("qCount").textContent = `Question ${S.idx+1} of ${N}`;
+  $("qBar").style.width = (S.idx / N * 100) + "%";
+  const lv = $("qLevel"); lv.className = "level l" + q.l; lv.textContent = LEVELS[q.l];
+  $("qText").textContent = q.q;
+  const box = $("qOpts"); box.innerHTML = "";
+  S.order[S.idx].forEach((orig, pos) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt"; b.setAttribute("role","radio"); b.setAttribute("aria-checked","false");
+    b.dataset.orig = orig;
+    b.innerHTML = `<span class="k">${LETTERS[pos]}</span><span></span>`;
+    b.lastChild.textContent = q.o[orig];
+    b.onclick = () => choose(b);
+    box.appendChild(b);
+  });
+  $("nextBtn").disabled = true;
+  $("nextBtn").textContent = S.idx === N-1 ? "Confirm & finish →" : "Confirm & next →";
+  startTimer();
+}
+function choose(b){
+  document.querySelectorAll(".opt").forEach(x => { x.classList.remove("on"); x.setAttribute("aria-checked","false") });
+  b.classList.add("on"); b.setAttribute("aria-checked","true");
+  selected = +b.dataset.orig;
+  $("nextBtn").disabled = false;
+}
+
+/* ---------- timer ---------- */
+const R = 29, C = 2*Math.PI*R;
+$("ring").style.strokeDasharray = C;
+function startTimer(){
+  clearInterval(tick);
+  deadline = Date.now() + CONFIG.SECONDS_PER_QUESTION*1000;
+  paint();
+  tick = setInterval(paint, 100);
+}
+function paint(){
+  const left = Math.max(0, deadline - Date.now());
+  const secs = Math.ceil(left/1000);
+  $("tNum").textContent = secs;
+  $("ring").style.strokeDashoffset = C * (1 - left/(CONFIG.SECONDS_PER_QUESTION*1000));
+  $("timer").classList.toggle("warn", secs <= 5);
+  if(left <= 0) next(true);
+}
+
+/* ---------- advance ---------- */
+function next(timedOut){
+  clearInterval(tick);
+  // On time-out, a highlighted-but-unconfirmed option still counts.
+  S.answers[S.idx] = selected !== null ? selected : null;
+  document.querySelectorAll(".opt").forEach(x => x.disabled = true);
+  $("nextBtn").disabled = true;
+  S.idx++;
+  $("resumeNote").classList.add("hidden");
+  store.set(S);
+  if(S.idx >= N) return submit();
+  setTimeout(render, timedOut ? 250 : 0);
+}
+$("nextBtn").onclick = () => { if(selected !== null) next(false) };
+
+document.addEventListener("keydown", e => {
+  if($("s-quiz").classList.contains("hidden")) return;
+  const k = e.key.toUpperCase();
+  const i = "1234".indexOf(k) > -1 ? "1234".indexOf(k) : "ABCD".indexOf(k);
+  const opts = document.querySelectorAll(".opt");
+  if(i > -1 && opts[i] && !opts[i].disabled){ choose(opts[i]); e.preventDefault(); }
+  if(e.key === "Enter" && selected !== null){ next(false); e.preventDefault(); }
+});
+
+/* ---------- integrity helpers ---------- */
+let leaving = false;
+window.addEventListener("pagehide", () => { leaving = true });
+document.addEventListener("visibilitychange", () => {
+  if(document.hidden && !leaving && S && S.status === "in_progress" && S.idx < N){ S.tabSwitches++; store.set(S); }
+});
+window.addEventListener("beforeunload", e => {
+  if(S && S.status === "in_progress" && S.idx < N){ e.preventDefault(); e.returnValue = ""; }
+});
+["copy","cut","paste"].forEach(ev => document.addEventListener(ev, e => { if(e.target.tagName !== "INPUT") e.preventDefault() }));
+
+/* ---------- submit ---------- */
+async function submit(){
+  show("s-sending");
+  if(DEMO){
+    const n = S.answers.filter(a => a !== null && a !== "R").length;
+    $("doneMsg").textContent = `Preview finished: you answered ${n} of ${N} questions. Nothing was saved because no backend is connected.`;
+    return show("s-done");
+  }
+  try{
+    const r = await api({ action:"submit", quizId:CONFIG.QUIZ_ID, token:S.token, answers:S.answers,
+                          tabSwitches:S.tabSwitches, interrupted:!!S.interrupted });
+    if(!r.ok && r.error !== "already_submitted") throw new Error(r.error);
+    S.status = "done"; store.set({status:"done", score:r.score, total:r.total});
+    finish(r);
+  }catch(ex){
+    show("s-retry");
+  }
+}
+$("retryBtn").onclick = submit;
+
+function finish(r){
+  if(CONFIG.SHOW_SCORE && typeof r.score === "number"){
+    $("scoreNum").textContent = `${r.score} / ${r.total}`;
+    const p = r.score / r.total;
+    $("scoreMsg").textContent = p >= .8 ? "Excellent work!" : p >= .6 ? "Good job, and a few concepts are worth a second look." : "Review the Session 1 slides before the next class.";
+    $("scoreWrap").classList.remove("hidden");
+  }
+  show("s-done");
+}
+function blocked(){ show("s-blocked"); }
+
+/* ---------- boot ---------- */
+(function boot(){
+  if(DEMO){ $("demoBanner").classList.remove("hidden"); return show("s-intro"); }
+  const saved = store.get();
+  if(!saved) return show("s-intro");
+  if(saved.status === "done") return blocked();
+  if(saved.status === "in_progress"){
+    S = saved;
+    if(S.idx >= N) return submit();                // finished but submission never confirmed
+    S.answers[S.idx] = "R"; S.interrupted = true;   // reload: the current question is forfeited
+    S.idx++; store.set(S);
+    if(S.idx >= N) return submit();
+    show("s-quiz"); $("resumeNote").classList.remove("hidden"); render();
+  }
+})();
+</script>
+</body>
+</html>
